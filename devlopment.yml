@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: to stop tomcat
+      service: name=tomcat8 state=stopped
+      become: true
+    - name: to remove old files
+      file: path=/var/lib/tomcat8/webapps/sample.war state=absent
+      become: true
+    - name: copy war file
+      copy: src=/home/ubuntu/sample.war dest=/var/lib/tomcat8/webapps/sample.war mode=0777
+      become: true
+    - name: to start tomcat8
+      service: name=tomcat8 state=started
+      become: true
+
+
+
+
